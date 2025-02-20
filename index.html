@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handmade Products Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #ff5e62;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ff3b4a;
+        }
+        .home, .products {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .categories button {
+            padding: 10px;
+            background: #444;
+            color: white;
+            border: none;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .product {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginPage">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Enter Email" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="home" id="homePage">
+        <h1>Welcome to Handmade Products</h1>
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+        <div class="categories">
+            <button onclick="showProducts('clothing')">Handmade Clothing</button>
+            <button onclick="showProducts('soaps')">Handmade Soaps</button>
+            <button onclick="showProducts('baskets')">Handmade Baskets</button>
+            <button onclick="showProducts('haircare')">Hair Care</button>
+            <button onclick="showProducts('skincare')">Skin Care</button>
+            <button onclick="showProducts('accessories')">Accessories</button>
+        </div>
+    </div>
+
+    <div class="products" id="productsPage">
+        <h2 id="categoryTitle"></h2>
+        <div class="products-grid" id="productList"></div>
+        <button onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        function login() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('homePage').style.display = 'block';
+        }
+
+        function showProducts(category) {
+            const products = {
+                clothing: ["cloth1.jpg", "cloth2.jpg","cloth3.jpg","cloth4.jpg"],
+                soaps: ["soap1.jpg", "soap2.jpg","soap3.jpg","soap4.jpg"],
+                baskets: ["basket1.jpg", "basket2.jpg","basket3.jpg","basket4.jpg"],
+                haircare: ["hair1.jpg", "hair2.jpg","hair3.jpg","hair4.jpg"],
+                skincare: ["skin1.jpg", "skin2.jpg","skin3.jpg","skin4.jpg"],
+                accessories: ["acce.jpg", "assc2.jpg","bangle1.jpg","bangle2.jpg"]
+            };
+
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('productsPage').style.display = 'block';
+            document.getElementById('categoryTitle').innerText = category.replace(/\b\w/g, c => c.toUpperCase());
+            
+            document.getElementById('productList').innerHTML = products[category].map(img => 
+                `<div class='product'>
+                    <img src="${img}" alt="${category}">
+                    ${category === 'clothing' ? `<select><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>` : ''}
+                    <button onclick="alert('Added to cart!')">Add to Cart</button>
+                    <button onclick="alert('Order Placed!')">Place Order</button>
+                </div>`
+            ).join('');
+        }
+
+        function goBack() {
+            document.getElementById('productsPage').style.display = 'none';
+            document.getElementById('homePage').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
